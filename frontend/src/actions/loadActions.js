@@ -14,10 +14,14 @@ export const receiveLoad = (load) => ({
 
 export const receiveQuestion = () => dispatch => {
     // console.log("receiving")
-    fetchQuestion()
+    return (fetchQuestion()
         .then(res => {
-            // console.log("receiveQuestion")
-            dispatch(receiveLoad(res.data))
+            // console.log(res.data.response);
+            dispatch(receiveLoad(res.data.response));
+            return res.data;
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err);
+            return err;
+        }))
 }

@@ -4,56 +4,32 @@ import React, {useState, useEffect} from 'react';
 
 const Home = (props) => {
 
-
     useEffect(() => {
         props.receiveQuestion()
     }, [])
-    // receiveQuestion()
 
-    const choices = () => {
-        // console.log(props.load.data[0].incorrect)
-        let choices = [];
-        let incorrect; 
-        
-        if (props.load.data) {
-            incorrect = props.load.data[0].incorrect;
-            
-            for(let i = 0; i < incorrect.length; i += 1) {
-                // console.log(props.load)
-                let choice = incorrect[i]
-                choices.push(
-                    <div>
-                        <label>`${choice}`</label>
-                    </div>
-                )
-            }
-        }
 
-        return choices
+    const emptyChoices = () => {
+        return <div>loading</div>
     }
 
     const renderChoices = () => {
-        if (props.load.data) {
+        return (
+            <div>
+                {props.load.data[0].incorrect.map(choice => {        
+                    return (
+                        <div>{choice}</div>
+                    )
+                })}
+            </div>
+        )
+     }
 
-            props.load.data[0].incorrect.map(choice => {
-                return (
-                    <div>
-                        <label>`${choice}`</label>
-                    </div>
-                )
-            })
-        }
-    }
 
-
-    return (
-        <div>
-            Home Page
-            {renderChoices()}
-            
-            
-        </div>
-    )
+    return !props.load.data ? emptyChoices() : renderChoices()
 }
+
+
+
 
 export default Home
